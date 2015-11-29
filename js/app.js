@@ -22,27 +22,37 @@ app.controller('myCtrl', function ($scope) {
         if (signMath == 'plus') {
           //  alert(valclk);
             if(valclk == 10){
+            var t =Math.round(old_wid+10);
             var new_wid =Math.round(old_wid+10)+"%";
             $("#"+sel_value).find(".progress-bar").width(new_wid);
             $("#"+sel_value).find(".progress_value").html(new_wid);
-          }
+            if(t >= 100){$("#"+sel_value).find(".progress-bar").css("background-color","green");}
+            else{$("#"+sel_value).find(".progress-bar").css("background-color","#f0ad4e");}
+            }
             else{
+            var t =Math.round(old_wid+25);
             var new_wid = Math.round(old_wid+25)+"%";
             $("#"+sel_value).find(".progress-bar").width(new_wid);
             $("#"+sel_value).find(".progress_value").html(new_wid);
+            if(t >= 100){$("#"+sel_value).find(".progress-bar").css("background-color","green");}
           //  alert(signMath);
         }
           }
          else if (signMath == 'minus'){
           //   alert(valclk);
            if(valclk == 10){
+           var t =Math.round(old_wid-10);
            var new_wid = Math.round(old_wid-10)+"%";
            $("#"+sel_value).find(".progress-bar").width(new_wid);
+           if(t < 100){$("#"+sel_value).find(".progress-bar").css("background-color","#F0AD4E");}
            if(new_wid < 0+"%"){$("#"+sel_value).find(".progress_value").html("0%");$("#"+sel_value).find(".progress-bar").width("0");}
-           else $("#"+sel_value).find(".progress_value").html(new_wid);}
+           else $("#"+sel_value).find(".progress_value").html(new_wid);
+         }
            else{
+           var t =Math.round(old_wid-25);
            var new_wid =  Math.round(old_wid-25)+"%";
            $("#"+sel_value).find(".progress-bar").width(new_wid);
+           if(t < 100){$("#"+sel_value).find(".progress-bar").css("background-color","#F0AD4E");}
            if(new_wid < 0+"%"){$("#"+sel_value).find(".progress_value").html("0%");$("#"+sel_value).find(".progress-bar").width("0");}
            else $("#"+sel_value).find(".progress_value").html(new_wid);}
           // alert(new_wid);
