@@ -1,65 +1,39 @@
 var app = angular.module('myApp', []);
-app.controller('myCtrl', function ($scope) {
-    //alert("hi");
-    console.log("works");
-    /**option values**/
-    $scope.sample = [{
-        id: '1',
-        name: 'ProgressBar1',
-    },  {
-        id: '2',
-        name: 'ProgressBar2',
-    }, {
-        id: '3',
-        name: 'ProgressBar3',	
-    }];
-    $scope.selected_item = $scope.sample[0];
-    /**add/delete fn**/
-      $scope.changeProgress = function (valclk, signMath) {
-       var sel_value = $scope.selected_item.name;
-	   var old_wid = $("#" + sel_value).find("span").text();
-        if (signMath == 'plus') {
-          //  alert(valclk);
-            if(valclk == 10){
-			t1= parseInt(old_wid);
-            t =Math.round(t1+10);
+app.controller('myCtrl',function ($scope,Bars) {   
+    Bars.getAll().then(function(bars){
+        $scope.bars = bars;
+        console.log(bars.bars);
+        $scope.$apply();
+    });         
+$scope.changeProgress = function (bars,Event) {  
+       var sel_value = $("#p_bar_select :selected").text();
+	   var old_wid = $("#"+sel_value).text();
+       var btn1 = event.currentTarget.innerHTML;
+       var limit = $("#limit").text();
+       limit = parseInt(limit);
+            t1= parseInt(old_wid);
+            t2= parseInt(btn1);
+            t =Math.round(t1+t2);
             new_wid =t+"%";
-            $("#"+sel_value).find(".progress-bar").width(new_wid);
+            $("#"+sel_value).width(new_wid);
             $("#"+sel_value).find("span").html(new_wid);
-            if(t >= 100){$("#"+sel_value).find(".progress-bar").css("background-color","green");}
-            else{$("#"+sel_value).find(".progress-bar").css("background-color","#f0ad4e");}
-            }
-            else{
-			t1= parseInt(old_wid);
-            t =Math.round(t1+25);
-            new_wid =t+"%";
-            $("#"+sel_value).find(".progress-bar").width(new_wid);
-            $("#"+sel_value).find("span").html(new_wid);
-            if(t >= 100){$("#"+sel_value).find(".progress-bar").css("background-color","green");}
-          //  alert(signMath);
-        }
-          }
-         else if (signMath == 'minus'){
-          //   alert(valclk);
-           if(valclk == 10){
-		   t1= parseInt(old_wid);
-           t =Math.round(t1-10);
-           new_wid =t+"%";
-           $("#"+sel_value).find(".progress-bar").width(new_wid);
-           if(t < 100){$("#"+sel_value).find(".progress-bar").css("background-color","#F0AD4E");}
-           if(new_wid < 0+"%"){$("#"+sel_value).find("span").html("0%");$("#"+sel_value).find(".progress-bar").width("0");}
-           else $("#"+sel_value).find("span").html(new_wid);
-         }
-           else{
-          t1= parseInt(old_wid);
-          t =Math.round(t1-25);
-           new_wid =t+"%";
-           $("#"+sel_value).find(".progress-bar").width(new_wid);
-           if(t < 100){$("#"+sel_value).find(".progress-bar").css("background-color","#F0AD4E");}
-           if(new_wid < 0+"%"){$("#"+sel_value).find("span").html("0%");$("#"+sel_value).find(".progress-bar").width("0");}
-           else $("#"+sel_value).find("span").html(new_wid);}
-          // alert(new_wid);
-          // alert(signMath);
-        }
+                if(t<0){$("#"+sel_value).find("span").html("0");}
+                if(t >= limit)
+                {
+                    $("#"+sel_value).find(".progress-bar").css("background-color","green");
+                }
+                else 
+                {
+                    $("#"+sel_value).find(".progress-bar").css("background-color","#f0ad4e");
+                } 
            };
+});
+
+app.service('Bars', function(){
+    var endpoint = 'http://pb-api.herokuapp.com/bars';
+    this.getAll = function(){
+        return $.get(endpoint);
+        
+    }
+
 });

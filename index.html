@@ -10,57 +10,38 @@
 	<link href="css/custom.css" rel="stylesheet">
   </head>
 <body>
-<div class="container"><!--starts container-->
-  <h1>Progress Bar</h1>
-<div class="row col-md-12 wrapper"><!--row starts-->
-	<div class="col-md-6 col-sm-12  col-lg-6 col-xs-12" id="ProgressBar1">
-  <!--progressbars starts-->
-  <div class = "progress">
-   <div class = "progress-bar progress-bar-success progress-bar-striped active pb_value" role = "progressbar">
-        <span>30%</span>
-   </div>
-</div>
-<!--ends progress bar-->
-
-  </div>
-	<div class="col-md-6 col-sm-12 col-lg-6 col-xs-12" id="ProgressBar2">
-    <!--progressbars starts-->
-    <div class = "progress">
-     <div class = "progress-bar progress-bar-success progress-bar-striped active pb_value" role = "progressbar">
-        <span>30%</span>
-     </div>
-  </div>
-  <!--ends progress bar-->
-  </div>
-	<div class="col-md-6 col-sm-12 col-lg-6 col-xs-12" id="ProgressBar3">
-    <!--progressbars starts-->
-    <div class = "progress">
-     <div class = "progress-bar progress-bar-success  progress-bar-striped active pb_value" role = "progressbar">
-        <span>30%</span>
-     </div>
-  </div>
-  <!--ends progress bar-->
-
-  </div>
-  
-  <div class="col-md-12 cntl_wrapper" id="contorls"  ng-controller="myCtrl"> <!--Control wrapper starts-->
-<!--dropdown-->
-<div class="form-group">
-      <label for="Progress-bar"></label>
-      <div class="col-sm-5 col-md-4 col-xs-12 col-lg-4">
-        <select class="form-control" id="p_bar_select"  ng-model="selected_item" ng-options="s.name for s in sample" title="Choose ProgressBar">
-        </select>
-      </div>
-      <div class="col-sm-7 col-md-8 col-xs-12 col-lg-8">
-        <input type="button" class="btn" value="+10" ng-click="changeProgress('10','plus');" title="Increase the progressbar value by 10"/>
-        <input type="button" class="btn" value="-10" ng-click="changeProgress('10','minus');" title="Decrease the progressbar value by 10"/>
-        <input type="button" class="btn" value="+25" ng-click="changeProgress('25','plus');" title="Increase the progressbar value by 25"/>
-        <input type="button" class="btn" value="-25" ng-click="changeProgress('25','minus');" title="Decrease the progressbar value by 25"/>
-      </div>
-</div><!--Dropdown ends-->
-<!--add/delete cntrls starts-->
-</div><!--Control wrapper Ends-->
-</div><!--row ends-->
+<div class="container" ng-controller="myCtrl"><!--starts container-->
+    <h1>Progress Bar</h1>
+    <div class="row col-md-12 col-sm-12 col-xs-12 col-lg-12 wrapper"><!--row starts-->
+    <!--progressbars starts-->     
+        <div ng-repeat="Bars in bars.bars">
+            <div class="col-md-6 col-sm-12  col-lg-6 col-xs-12" id="ProgressBar1">
+              <div class = "progress">
+               <div class = "progress-bar progress-bar-success progress-bar-striped active pb_value" role = "progressbar" id="{{Bars}}" style="width:{{Bars}}%">
+                    <span>{{Bars}}%</span>      
+               </div>
+            </div>
+            </div>
+        </div>
+    <!--ends progress bar--> 
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 cntl_wrapper" id="contorls"  > <!--Control wrapper starts-->
+    <!--dropdown-->
+        <div class="form-group">
+              <label for="Progress-bar"></label>
+              <div class="col-sm-5 col-md-4 col-xs-12 col-lg-4">
+                <select class="form-control" id="p_bar_select" title="Choose ProgressBar">
+                    <option ng-repeat="Bars in bars.bars" value="Bars in bars.bars">{{Bars}}</option>
+                </select>
+              </div>
+              <div class="col-sm-7 col-md-8 col-xs-12 col-lg-8" id="button_wrapper">
+                    <div ng-repeat="Bars in bars.buttons track by $index">
+                        <a href="#" ng-click="changeProgress(bars.buttons)" id="btn1">{{Bars}}</a>
+                    </div>
+              </div>
+        </div><!--Dropdown ends-->
+    <!--add/delete cntrls starts-->
+    </div><!--Control wrapper Ends-->
+    </div><!--row ends-->
 </div><!--Ends container-->
 <!-- Angular.js / jquery / bootstrap library -->
  <script src="js/jqueryv1.11.3.js"></script>
